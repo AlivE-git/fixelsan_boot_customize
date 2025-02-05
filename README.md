@@ -14,7 +14,7 @@ I don't recommend changing the image resolutions to avoid any issues.
 
 Keep the file names. For example, 'bg.IMAG.png' can be 'bg.IMAG.jpg' or 'bg.IMAG.bmp'. The same applies to music.
 
-If you want to disable the music, copy 'bgm44.mp3' from the 'No music' folder into the 'Data' folder.
+If you want to disable the music, copy 'bgm44.wav' from the 'No music' folder into the 'Data' folder.
 
 Unfortunately, I couldn't find a command-line application for proper image compilation. If you know of one, please write it in the issues :)
 
