@@ -4,9 +4,25 @@ setlocal
 :: Set tool paths and directories
 set IMAGE_CONVERT_TOOL=Tools\3it_win64.exe
 set AUDIO_CONVERT_TOOL=Tools\3at_win64.exe
+set COMPILE_TOOL=Tools\3doiso.exe
+set ENCRYPT_TOOL=Tools\3DOEncrypt.exe
 set DATA_DIR=Data
 set OUTPUT_DIR=Decompiled
 set ASSETS_DIR=%OUTPUT_DIR%\assets
+
+:: Check if Data folder exists
+if not exist "%DATA_DIR%\" (
+    echo Error: '%DATA_DIR%' folder not found!
+    pause
+    exit /b
+)
+
+:: Check if Decompiled folder exists
+if not exist "%OUTPUT_DIR%\" (
+    echo Error: '%OUTPUT_DIR%' folder not found!
+    pause
+    exit /b
+)
 
 :: Convert BannerScreen to original format with --output-path
 for %%F in (png jpg bmp) do (
@@ -74,31 +90,18 @@ for %%F in (wav mp3 ogg) do (
     )
 )
 
-:: Text hints for the user
-echo.
-echo - Click "Compile ISO" -
-echo - Double-click on the "Decompiled" folder to select it -
-echo - Click "OK" -
-echo - Save it as "boot.iso" in the root directory -
-echo - Close the application -
-echo.
-
-
-:: Wait for OperaFS to close before continuing
-echo Waiting for OperaFS to close...
-start /wait "" "Tools\OperaFS\OperaFS.exe"
+:: Compile boot.iso
+%COMPILE_TOOL% -in %OUTPUT_DIR% -out boot.iso
 
 :: Check if boot.iso exists in the root directory
 if not exist "boot.iso" (
     echo Error: boot.iso not found in the root directory.
-    echo Please make sure that boot.iso is located in the root directory before continuing.
     pause
     exit /b
 )
 
 :: Generate and encrypt boot.iso
-Tools\3doEncrypt.exe genromtags boot.iso
-Tools\3doEncrypt.exe boot.iso
+%ENCRYPT_TOOL% genromtags boot.iso
 
 echo.
 echo boot.iso has been signed successfully!

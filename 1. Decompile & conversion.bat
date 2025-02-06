@@ -10,10 +10,6 @@ set OUTPUT_DIR=Decompiled
 set DATA_DIR=Data
 set ASSETS_DIR=%OUTPUT_DIR%\assets
 
-:: Print current directory for debugging
-echo Current directory: %CD%
-echo Checking files...
-
 :: Check if boot.iso exists
 if not exist "%ISO_FILE%" (
     echo Error: %ISO_FILE% not found in %CD%\boot_image!
